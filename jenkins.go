@@ -596,7 +596,7 @@ func (j *Jenkins) Poll(ctx context.Context) (int, error) {
 // Creates a new Jenkins Instance
 // Optional parameters are: client, username, password or token
 // After creating an instance call init method.
-func CreateJenkins(client *http.Client, base string, auth ...interface{}) *Jenkins {
+func CreateJenkins(client HTTPClient, base string, auth ...interface{}) *Jenkins {
 	j := &Jenkins{}
 	if strings.HasSuffix(base, "/") {
 		base = base[:len(base)-1]

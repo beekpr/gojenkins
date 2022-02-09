@@ -54,10 +54,14 @@ func NewAPIRequest(method string, endpoint string, payload io.Reader) *APIReques
 	return ar
 }
 
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
 type Requester struct {
 	Base      string
 	BasicAuth *BasicAuth
-	Client    *http.Client
+	Client    HTTPClient
 	CACert    []byte
 	SslVerify bool
 }
@@ -133,7 +137,7 @@ func (r *Requester) Get(ctx context.Context, endpoint string, responseStruct int
 	return r.Do(ctx, ar, responseStruct, querystring)
 }
 
-func (r *Requester) SetClient(client *http.Client) *Requester {
+func (r *Requester) SetClient(client HTTPClient) *Requester {
 	r.Client = client
 	return r
 }
